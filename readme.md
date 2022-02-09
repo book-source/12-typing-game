@@ -1,0 +1,1 @@
+# Template Vanilla Web Project
