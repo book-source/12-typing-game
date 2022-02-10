@@ -35,7 +35,11 @@ const words = [
 // Init 
 let randomWord;
 let score = 0;
-let time = 3;
+let time = 10;
+
+// set difficulty
+let difficulty = localStorage.getItem('difficulty') !== null ? localStorage.getItem('difficulty') : 'medium';
+difficultySelect.value = difficulty;
 
 // focus on text on start
 text.focus();
@@ -94,9 +98,30 @@ text.addEventListener('input', e => {
 	// console.log(insertedText);
 	if (insertedText === randomWord) {
 		addWordToDOM();
+		updateScore();
 
 		// clear
 		e.target.value = '';
-		updateScore();
+
+		if (difficulty === 'hard') {
+			time += 2;
+		} else if (difficulty === 'medium') {
+			time += 3;
+		} else {
+			time += 5;
+		}
+		updateTime();
+
 	}
+})
+
+// Settings btn click
+settingsBtn.addEventListener('click', () => {
+	settings.classList.toggle('hide');
+})
+
+// setting select
+settingsForm.addEventListener('change', function (event) {
+	difficulty = event.target.value;
+	localStorage.setItem('difficulty', difficulty);
 })
